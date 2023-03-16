@@ -5,18 +5,18 @@
         <style>
              .flex-container {
               display: flex;  flex-direction:row;
-              background-color: yellow;
+              background-color: goldenrod;
              }
 
              .flex-container > div {  /*div children of the flex container*/
-              background-color: orange; 
+              background-color: palevioletred; 
               margin: 10px;  padding: 20px;  font-size: 30px;
               }
               /* Responsive layout */
               @media (max-width: 600px) { 
 	          .flex-container{
 		       flex-direction:column;
-		       background-color: pink;
+		       background-color: lightpink;
 	           }
 	         }
              .btn{
@@ -39,31 +39,61 @@
        <label for="input">Enter the name of item here: </label>
        <input type ="text" id="input">
 		<div class="flex-container" id="target">
-		  <div class="delayQ">row item 1</div>   
-		  <div class="delayQ">row item 2</div>  
-		  <div class="delayQ">row item 3</div>  
+		  <div class="delayq">item 1</div>   
+		  <div class="delayq">item 2</div>  
+		  <div class="delayq">item 3</div>  
 		</div>
 	
 	 <p> Press the button mf and create an new element of type div and then add it to the container.
      </p>
 		<button class = "btn" onclick="makeNewDiv()">Add Value</button>
-        <br>
-          
+		<input class="btn" type="button" value="get" onclick="get()">
+        <input class="btn" type="button" value="delay" onclick="delay()">
+        <input class="btn" type="button" value="promote" onclick="promote()">
+
          <script>
             function makeNewDiv(){
-                /* make the div and its text */
                 let element = document.createElement("div")
                 let newElement = document.getElementById("input").value
                 element.innerHTML = newElement
-                element.className = "delayQ"
-                element.style.color = "black"
+                element.className = "delayq"
+                element.style.color = "green"
         
-                /* add it to the container */
                 let container = document.getElementById('target')
                 container.appendChild(element)
                 
             }
             
+			
+            function get(){
+                let queueItems = document.getElementsByClassName("delayq")
+                console.log(queueItems)
+                let length_elements = queueItems.length
+                if (length_elements>0){
+                    queueItems[0].remove()
+                }
+            }
+            function delay(){
+                let queueItems = document.getElementsByClassName("delayq")
+                let length_elements = queueItems.length
+                if(length_elements==0 || length_elements==1){
+                    console.log("Not enough elements to delay")
+                }
+                else{
+                    let removedItem = queueItems[length_elements-1]
+                    queueItems[length_elements-1].remove()
+                    console.log(removedItem)
+                    let container_div = document.getElementById("target")
+                    container_div.insertBefore(removedItem,container_div.firstChild)
+                }
+            }
+            function promote(){
+                let queueItems = document.getElementsByClassName("delayq")
+                let length_elements = queueItems.length
+                let num = Math.floor(Math.random()* length_elements)
+                let randNum = queueItems[num]
+                randNum.parentNode.insertBefore(randNum,randNum.parentNode.firstChild)
+            }
         </script>
 </body>
 
